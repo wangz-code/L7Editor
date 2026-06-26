@@ -1,9 +1,16 @@
 {
+  // 多语言文件夹（相对项目根，不能加 ./）
   "i18n-ally.localesPaths": ["src/locales/langs"],
-  "i18n-ally.keystyle": "nested",
-  "i18n-ally.sortKeys": true,
-  "i18n-ally.enabledParsers": ["ts", "json"],
-  "i18n-ally.sourceLanguage": "zh-CN",
+  // 启用ts解析，必须开才能读 .ts 文件
+  "i18n-ally.enabledParsers": ["ts", "js", "json"],
+  // 目录模式：file=每个文件=一种语言（关键！默认dir会匹配文件夹）
+  "i18n-ally.dirStructure": "file",
+  // 匹配 {语言码}.ts 文件名
+  "i18n-ally.pathMatcher": "{locale}.{ext}",
+  // 声明带横杠语言
+  "i18n-ally.languages": ["en", "zh-CN"],
   "i18n-ally.displayLanguage": "zh-CN",
-  "i18n-ally.enabledFrameworks": ["react"]
+  "i18n-ally.sourceLanguage": "zh-CN",
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.namespace": false
 }

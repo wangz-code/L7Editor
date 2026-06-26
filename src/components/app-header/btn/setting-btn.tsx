@@ -48,7 +48,7 @@ export const SettingBtn: React.FC = () => {
         open={isModalOpen}
         onOk={handleOk} /*  */
         onCancel={handleCancel}
-        destroyOnClose
+        destroyOnHidden
         okText={t('btn.setting_btn.queRen')}
         cancelText={t('btn.setting_btn.quXiao')}
       >

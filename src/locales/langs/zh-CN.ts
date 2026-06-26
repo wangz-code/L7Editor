@@ -82,6 +82,7 @@ export default {
   'app_header.constants.shiYongCTR':
     '使用 Ctrl/Command + S 快捷键，或点击保存按钮渲染数据（已保存状态下保存按钮置灰）',
   'app_header.constants.baoCun': '保存',
+  'app_header.constants.genFloor': '生成楼层',
   'app_header.constants.shangChuanPNG': '上传.png',
   'app_header.constants.shangChuanGEO': '上传 GeoJSON 数据',
   'app_header.constants.diTuShangChaKan': '地图上查看渲染效果',

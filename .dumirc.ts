@@ -1,8 +1,8 @@
-import CopyPlugin from 'copy-webpack-plugin';
-import { defineConfig } from 'dumi';
-import MonacoEditorWebpackPlugin from 'monaco-editor-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin'
+import { defineConfig } from 'dumi'
+import MonacoEditorWebpackPlugin from 'monaco-editor-webpack-plugin'
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
 export default defineConfig({
   apiParser: {},
@@ -27,7 +27,6 @@ export default defineConfig({
     ],
     footer: false,
   },
-
   metas: [
     {
       name: 'keywords',
@@ -47,29 +46,12 @@ export default defineConfig({
   favicons: [
     'https://mdn.alipayobjects.com/huamei_k6sfo0/afts/img/A*gBeETo04y0IAAAAAAAAAAAAADjWqAQ/original',
   ],
-  headScripts: [
-    'https://gw.alipayobjects.com/os/lib/turf/turf/6.5.0/turf.min.js',
-    'https://gw.alipayobjects.com/os/lib/papaparse/5.4.0/papaparse.min.js',
-    'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
-    `
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?058f3804ba67cf2c918042746dcaefbb";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-      })();`,
-    `
-      window._AMapSecurityConfig = {
-        securityJsCode: '68398c08084800b68071635d7ba573b0',
-      }
-    `,
-  ],
+  headScripts: [],
   chainWebpack: (config: any) => {
     config
       .plugin('monaco-editor')
       .use(MonacoEditorWebpackPlugin, [{ languages: ['json', 'javascript'] }])
-      .end();
+      .end()
     config
       .plugin('CopyPlugin')
       .use(CopyPlugin, [
@@ -82,7 +64,7 @@ export default defineConfig({
           ],
         },
       ])
-      .end();
-    return config;
+      .end()
+    return config
   },
-});
+})

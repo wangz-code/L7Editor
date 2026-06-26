@@ -57,7 +57,7 @@ export const L7MapOptionControl = () => {
         open={isModalOpen}
         onCancel={handleCancel}
         width={800}
-        destroyOnClose
+        destroyOnHidden
         footer={
           <>
             <Button onClick={handleCancel}>

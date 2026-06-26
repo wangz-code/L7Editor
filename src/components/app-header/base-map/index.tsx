@@ -43,7 +43,7 @@ export const BaseMap = () => {
   return (
     <Select
       style={{ width: '120px' }}
-      bordered={false}
+      variant="borderless"
       defaultValue={baseMap}
       onChange={handleChange}
     >

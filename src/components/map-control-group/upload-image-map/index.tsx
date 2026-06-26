@@ -160,7 +160,7 @@ export const UploadImageMapControl = () => {
         open={isModalOpen}
         onCancel={handleCancel}
         width={800}
-        destroyOnClose
+        destroyOnHidden
         footer={
           <>
             <Popconfirm

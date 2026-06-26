@@ -93,7 +93,7 @@ export const ImportBtn = () => {
           open={isModalOpen}
           onOk={checkWithRestData}
           onCancel={handleCancel}
-          destroyOnClose
+          destroyOnHidden
           confirmLoading={confirmLoading}
           width={1000}
         >

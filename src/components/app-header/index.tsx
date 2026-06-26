@@ -2,34 +2,36 @@ import {
   DingtalkOutlined,
   FlagOutlined,
   GithubOutlined,
+  OrderedListOutlined,
   SaveOutlined,
-} from '@ant-design/icons';
-import { useKeyPress, useLocalStorageState } from 'ahooks';
-import type { MenuProps, TourProps } from 'antd';
-import { Button, Divider, Dropdown, Popover, Space, Tooltip, Tour } from 'antd';
-import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { LocalStorageKey } from '../../constants';
-import { useFeature, useGlobal } from '../../recoil';
-import type { ToolbarProps } from '../../types/l7editor';
-import { IconFont } from '../iconfont';
-import { BaseMap } from './base-map';
-import DownloadBtn from './btn/download-btn';
-import HandBackBtn from './btn/handback-btn';
-import I18nBtn from './btn/i18n-btn';
-import { ImportBtn } from './btn/import-btn';
-import { SettingBtn } from './btn/setting-btn';
-import useStyle from './styles';
+} from '@ant-design/icons'
+import { useKeyPress, useLocalStorageState } from 'ahooks'
+import type { MenuProps, TourProps } from 'antd'
+import { Button, Divider, Dropdown, Popover, Space, Tooltip, Tour } from 'antd'
+import classNames from 'classnames'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { LocalStorageKey } from '../../constants'
+import { useFeature, useGlobal } from '../../recoil'
+import type { ToolbarProps } from '../../types/l7editor'
+import { IconFont } from '../iconfont'
+import { BaseMap } from './base-map'
+import DownloadBtn from './btn/download-btn'
+import HandBackBtn from './btn/handback-btn'
+import I18nBtn from './btn/i18n-btn'
+import { ImportBtn } from './btn/import-btn'
+import { SettingBtn } from './btn/setting-btn'
+import useStyle from './styles'
 
 type openType = {
-  key: string;
-  open: boolean;
-};
+  key: string
+  open: boolean
+}
 
 type AppHeaderProps = {
-  toolbar?: ToolbarProps;
-};
+  toolbar?: ToolbarProps
+  onGenFloor?:Function
+}
 
 const isTooBar = {
   logo: true,
@@ -43,32 +45,32 @@ const isTooBar = {
   i18n: true,
   github: true,
   baseMap: true,
-};
+}
 
-export const AppHeader: React.FC<AppHeaderProps> = ({ toolbar }) => {
-  const { t } = useTranslation();
-  const [open, setOpen] = useState<openType>({ key: '', open: false });
-  const { autoFitBounds, theme, setTheme } = useGlobal();
-  const { saveEditorText, savable, bboxAutoFit } = useFeature();
-  const [isTooBarState, setIsTooBar] = useState(isTooBar);
-  const styles = useStyle();
+export const AppHeader: React.FC<AppHeaderProps> = ({ toolbar,onGenFloor }) => {
+  const { t } = useTranslation()
+  const [open, setOpen] = useState<openType>({ key: '', open: false })
+  const { autoFitBounds, theme, setTheme } = useGlobal()
+  const { saveEditorText, savable, bboxAutoFit } = useFeature()
+  const [isTooBarState, setIsTooBar] = useState(isTooBar)
+  const styles = useStyle()
   const [firstOpen, setFirstOpen] = useLocalStorageState<boolean>(
     LocalStorageKey.firstOpening,
     {
       defaultValue: true,
     },
-  );
+  )
 
   useEffect(() => {
     if (firstOpen) {
       setOpen({
         key: 'basics',
         open: true,
-      });
-      setFirstOpen(false);
+      })
+      setFirstOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   const DropdownMenuItems: MenuProps['items'] = [
     {
@@ -79,7 +81,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ toolbar }) => {
       key: 'function',
       label: t('app_header.constants.quanGongNengShiYong'),
     },
-  ];
+  ]
 
   const steps: TourProps['steps'] = [
     {
@@ -122,7 +124,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ toolbar }) => {
       target: () => document.getElementById('l7-editor-map')!,
       placement: 'right',
     },
-  ];
+  ]
 
   const functionSteps: TourProps['steps'] = [
     {
@@ -232,31 +234,34 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ toolbar }) => {
       target: () => document.getElementById('l7-editor-table')!,
       placement: 'left',
     },
-  ];
+  ]
 
   const onSave = () => {
     if (!savable) {
-      return;
+      return
     }
-    const features = saveEditorText();
+    const features = saveEditorText()
     if (autoFitBounds) {
-      bboxAutoFit(features);
+      bboxAutoFit(features)
     }
-  };
+  }
 
   useKeyPress(['ctrl.s', 'meta.s'], (e) => {
-    e.preventDefault();
-    onSave();
-  });
+    e.preventDefault()
+    onSave()
+  })
 
   const onDownload = (key: string) => {
-    setOpen({ key, open: true });
-  };
+    setOpen({ key, open: true })
+  }
 
   useEffect(() => {
-    setIsTooBar({ ...isTooBar, ...toolbar });
-  }, [toolbar]);
+    setIsTooBar({ ...isTooBar, ...toolbar })
+  }, [toolbar])
 
+  const genFloor = ()=>{
+    onGenFloor && onGenFloor()
+  }
   return (
     <div className={classNames([styles.mapHeader, 'l7-editor-header'])}>
       <div className={styles.mapHeaderLeft}>
@@ -289,13 +294,20 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ toolbar }) => {
               {t('app_header.constants.baoCun')}
             </Button>
           </Tooltip>
+          <Button
+            id="l7-editor-floor"
+            icon={<OrderedListOutlined />}
+            onClick={genFloor}
+          >
+            {t('app_header.constants.genFloor')}
+          </Button>
           {isTooBarState.download && <DownloadBtn />}
           {isTooBarState.guide && (
             <Dropdown
               menu={{
                 items: DropdownMenuItems,
                 onClick: ({ key }) => {
-                  onDownload(key);
+                  onDownload(key)
                 },
               }}
               placement="bottom"
@@ -347,7 +359,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ toolbar }) => {
                 }
                 // className={styles.theme}
                 onClick={() => {
-                  setTheme(theme === 'dark' ? 'light' : 'dark');
+                  setTheme(theme === 'dark' ? 'light' : 'dark')
                 }}
               />
             </Tooltip>
@@ -358,7 +370,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ toolbar }) => {
               <Button
                 icon={<GithubOutlined />}
                 onClick={() => {
-                  window.open('https://github.com/antvis/L7Editor');
+                  window.open('https://github.com/antvis/L7Editor')
                 }}
               />
             </Tooltip>
@@ -371,5 +383,5 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ toolbar }) => {
         steps={open.key === 'basics' ? steps : functionSteps}
       />
     </div>
-  );
-};
+  )
+}

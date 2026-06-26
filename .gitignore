@@ -21,3 +21,4 @@ yarn.lock
 /.kiwi
 /.vscode
 /docs-dist
+public/.DS_Store
